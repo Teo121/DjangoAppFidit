@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Reservation</title>
+    <!-- Add your styles or link to external stylesheets here -->
+</head>
+<body>
+    <h2>Update Reservation</h2>
+    
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Reservation</button>
+    </form>
+
+    <a href="{% url 'homepage' %}">Back to Homepage</a>
+</body>
+</html>

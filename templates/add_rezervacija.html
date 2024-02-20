@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Rezervacija</title>
+</head>
+<body>
+    <h1>Dodaj rezervaciju</h1>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Dodaj rezervaciju">
+    </form>
+
+    <a href="{% url 'homepage' %}">Povratak na početnu stranicu</a>
+</body>
+</html>

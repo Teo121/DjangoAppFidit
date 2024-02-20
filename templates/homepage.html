@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Putovanja i Smještaj</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+        }
+
+        nav {
+            background-color: #222;
+            padding: 0.5em;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 1em;
+            font-weight: bold;
+        }
+
+        section {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            display: none; /* Početno skrivanje popisa */
+        }
+
+        li {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .add-button,
+        .update-button,
+        .remove-button,
+        .toggle-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-button {
+            background-color: #4caf50;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .add-button:hover {
+            background-color: #45a049;
+        }
+
+        .update-button {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .update-button:hover {
+            background-color: #2980b9;
+        }
+
+        .remove-button {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+
+        .remove-button:hover {
+            background-color: #c0392b;
+        }
+
+        .toggle-button {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .toggle-button:hover {
+            background-color: #2980b9;
+        }
+
+        .remove-form {
+            display: none;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+        }
+
+        .remove-form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Istražujte Destinacije i Smještaj</h1>
+    </header>
+
+    <nav>
+        <a href="javascript:void(0);" class="toggle-button" onclick="toggleList('destinationsList')">Prikaži/Sakrij Destinacije</a>
+        <a href="javascript:void(0);" class="toggle-button" onclick="toggleList('accommodationsList')">Prikaži/Sakrij Smještaj</a>
+        <a href="javascript:void(0);" class="toggle-button" onclick="toggleList('reservationsList')">Prikaži/Sakrij Rezervacije</a>
+        <a href="{% url 'add_rezervacija' %}" class="add-button">Dodaj Rezervaciju</a>
+    </nav>
+
+    <section id="destinations" class="destinations">
+        <h2>Destinacije</h2>
+        <ul id="destinationsList">
+            {% for destinacija in destinacije %}
+                <li>{{ destinacija.ime }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section id="accommodations" class="accommodations">
+        <h2>Smještaj</h2>
+        <ul id="accommodationsList">
+            {% for smjestaj in smjestaji %}
+                <li>{{ smjestaj.naziv }} - {{ smjestaj.destinacija.ime }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section id="reservations" class="reservations">
+        <h2>Rezervacije</h2>
+        <ul id="reservationsList">
+            {% for rezervacija in rezervacije %}
+                <li>
+                    {{ rezervacija.korisnik.username }} - {{ rezervacija.smjestaj.naziv }} - {{ rezervacija.datum_dolaska }} do {{ rezervacija.datum_odlaska }}
+                    <div>
+                        <a href="{% url 'update_rezervacija' rezervacija.id %}" class="update-button">Ažuriraj</a>
+                        <a href="{% url 'delete_rezervacija' rezervacija.id %}" class="remove-button">Obriši</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <script>
+        function toggleList(listId) {
+            var list = document.getElementById(listId);
+            if (list.style.display === "none" || list.style.display === "") {
+                list.style.display = "block";
+            } else {
+                list.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
